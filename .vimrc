@@ -33,6 +33,10 @@ NeoBundle 'tpope/vim-endwise'
 
 " インデントに色を付けて見やすくする
 NeoBundle 'nathanaelkane/vim-indent-guides'
+
+" スクロールバーの表示
+NeoBundle 'lornix/vim-scrollbar'
+
 " vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup = 1
 """"""""""""""""""""""""""""""
