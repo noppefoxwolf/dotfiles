@@ -3,7 +3,6 @@ alias gcc="gcc -Wall"
 alias ll="ls -l"
 alias daemon-stat="sudo svstat /service/*"
 
-
 #keybind
 bindkey -e
 zle -N history-beginning-search-backward-end history-search-end
@@ -20,8 +19,8 @@ zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'c
 #prompt
 source ~/.git-prompt.sh
 fpath=(~/.zsh/completion $fpath)
-PROMPT='%F{032}%~$(__git_ps1) %% %f'
-RPROMPT='%F{099}%M %*%f'
+PROMPT='%F{208}%~$(__git_ps1) %% %f'
+RPROMPT='%F{207}%M %*%f'
 
 #history
 HISTFILE=~/.zsh_history
