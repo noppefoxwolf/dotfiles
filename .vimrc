@@ -15,6 +15,14 @@ let g:neobundle_default_git_protocol='https'
 
 "行番号の表示
 set number
+"タブに関する設定
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+"左右のカーソル移動で行間移動可能にする。
+set whichwrap=b,s,<,>,[,]
+
 " neobundle#begin - neobundle#end の間に導入するプラグインを記載します。
 NeoBundleFetch 'Shougo/neobundle.vim'
 " ↓こんな感じが基本の書き方
