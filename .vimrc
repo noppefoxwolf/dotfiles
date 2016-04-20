@@ -48,6 +48,9 @@ NeoBundle 'lornix/vim-scrollbar'
 " 入力補完
 NeoBundle 'Shougo/neocomplcache'
 
+" Swift syntacs hilight
+NeoBundle 'keith/swift.vim'
+
 " vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup = 1
 """"""""""""""""""""""""""""""
