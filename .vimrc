@@ -51,6 +51,18 @@ NeoBundle 'Shougo/neocomplcache'
 " Swift syntacs hilight
 NeoBundle 'keith/swift.vim'
 
+" MarkdownPreview
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
+
+" Go言語
+NeoBundle 'fatih/vim-go'
+
+au BufRead,BufNewFile *.md set filetype=markdown
+let g:previm_open_cmd = 'open -a Safari'
+
+
 " vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup = 1
 """"""""""""""""""""""""""""""
@@ -66,7 +78,7 @@ noremap <C-N> :Unite -buffer-name=file file<CR>
 noremap <C-Z> :Unite file_mru<CR>
 " sourcesを「今開いているファイルのディレクトリ」とする
 noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
-""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 ""入力補完系の設定
@@ -104,6 +116,12 @@ inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""
+" キーコンフィグ
+""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""
+
 
 
 " vimrc に記述されたプラグインでインストールされていないものがないかチェックする

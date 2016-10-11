@@ -2,6 +2,10 @@
 alias gcc="gcc -Wall"
 alias ll="ls -l"
 alias daemon-stat="sudo svstat /service/*"
+alias MP4Box="/Applications/Osmo4.app/Contents/MacOS/MP4Box"
+
+#git hub
+function git(){hub "$@"} # zsh
 
 #keybind
 bindkey -e
@@ -58,6 +62,8 @@ export LANG="ja_JP.UTF-8"
 export TZ=JST-9
 export PATH=/usr/local/bin:$HOME/bin:$PATH
 
+export ANT_HOME="/usr/local/bin/ant/"
+export PATH="$PATH:$ANT_HOME/bin"
 
 # Attache tmux
 if ( ! test $TMUX ) && ( ! expr $TERM : "^screen" > /dev/null ) && which tmux > /dev/null; then
@@ -114,7 +120,29 @@ export PATH="/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PAT
 #THEOS
 export THEOS="/opt/theos"
 
+# MAVEN
+export M2_HOME=/usr/local/apache-maven-3.3.9
+export PATH=$PATH:$M2_HOME/bin
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export PATH=$M3:$JAVA_HOME:$PATH
+
 #Macports
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export MANPATH=/opt/local/man:$MANPATH
 export GOPATH=~/.go
+
+#ADB
+export PATH=$PATH:/Users/tomoya.hirano/Library/Android/sdk/platform-tools
+
+if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /Users/tomoya.hirano/google-cloud-sdk/path.zsh.inc ]; then
+  source '/Users/tomoya.hirano/google-cloud-sdk/path.zsh.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /Users/tomoya.hirano/google-cloud-sdk/completion.zsh.inc ]; then
+  source '/Users/tomoya.hirano/google-cloud-sdk/completion.zsh.inc'
+fi
