@@ -62,3 +62,16 @@ fi
 
 # Final prompt format
 PROMPT='${user_display} %1~ ${vcs_info_msg_0_}: '
+
+# -----------------------------------------------------------------------------
+# Custom Commands
+# -----------------------------------------------------------------------------
+
+# Function to handle # queries to ai
+function ai-ask() {
+  local query="$*"
+  claude -p "$query"
+}
+
+# Create # as a command alias
+alias '#'='ai-ask'
