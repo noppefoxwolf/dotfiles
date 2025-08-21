@@ -1,148 +1,64 @@
-#alias
-alias gcc="gcc -Wall"
-alias ll="ls -l"
-alias daemon-stat="sudo svstat /service/*"
-alias MP4Box="/Applications/Osmo4.app/Contents/MacOS/MP4Box"
+# =============================================================================
+# ZSH CONFIGURATION
+# =============================================================================
 
-#git hub
-function git(){hub "$@"} # zsh
-
-#keybind
-bindkey -e
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-
-#zstyle
-zstyle ':completion:*' list-colors 'di=36' 'ln=35'
-zstyle ':completion:*:default' menu select=1
-zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-[ -f ~/.zshrc.include ] && source ~/.zshrc.include
-
-#prompt
-source ~/.git-prompt.sh
-fpath=(~/.zsh/completion $fpath)
-PROMPT='%F{208}%~$(__git_ps1) %% %f'
-RPROMPT='%F{207}%M %*%f'
-
-#history
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-setopt hist_ignore_dups
-setopt share_history
-setopt auto_cd
-setopt auto_pushd
-setopt correct
-setopt prompt_subst
-setopt pushd_ignore_dups
-setopt list_packed
-setopt list_types
-setopt hist_ignore_dups
-setopt EXTENDED_HISTORY
-
-#autoload
-autoload history-search-end
+# -----------------------------------------------------------------------------
+# Completions
+# -----------------------------------------------------------------------------
 autoload -U compinit
-compinit -u
+compinit
 
-#ls
-if [ $(echo $OSTYPE | cut -b 1-6) = "darwin" ];then
-	alias ls="ls -aG"
-else
-	alias ls="ls -a --color"
-fi
-export LSCOLORS=GxfxcxdxBxegedabadAeAg
+# -----------------------------------------------------------------------------
+# Tools and Utilities
+# -----------------------------------------------------------------------------
 
-#other env
-export EDITOR=emacs
-export HOSTNAME=`hostname`
-export LANG="ja_JP.UTF-8"
-export TZ=JST-9
-export PATH=/usr/local/bin:$HOME/bin:$PATH
+# z - Directory jumping tool
+. /opt/homebrew/etc/profile.d/z.sh
 
-export ANT_HOME="/usr/local/bin/ant/"
-export PATH="$PATH:$ANT_HOME/bin"
+# SwiftPM - Swift Package Manager
+export PATH="$HOME/.swiftpm/bin:$PATH"
 
-# Attache tmux
-if ( ! test $TMUX ) && ( ! expr $TERM : "^screen" > /dev/null ) && which tmux > /dev/null; then
-    if ( tmux has-session ); then
-		session=`tmux list-sessions | grep -e '^[0-9].*]$' | head -n 1 | sed -e 's/^\([0-9]\+\).*$/\1/'`
-		if [ -n "$session" ]; then
-			echo "Attache tmux session $session."
-			tmux attach-session -t `echo $session | cut -d":" -f 1`
-		else
-			echo "Session has been already attached."
-			tmux list-sessions
-		fi
-    else
-		echo "Create new tmux session."
-		tmux
-    fi
-fi
-
-#plenv
-if [ -x "$HOME/.plenv" ]; then
-    export PATH=$HOME/.plenv/bin:$PATH
-    eval "$(plenv init -)"
-fi
-
-#rbenv
-if [ -x "$HOME/.rbenv" ]; then
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval "$(rbenv init -)"
-fi
-
-#pyenv
-if [ -x "$HOME/.pyenv" ]; then
-	export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-fi
-
-#nodebrew
-if [ -x "$HOME/.nodebrew" ]; then
-    PATH=$HOME/.nodebrew/current/bin:$PATH
-fi
-
-if [ -x "$HOME/Documents" ]; then
-	cd ~/Documents
-fi
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-### direnv
+# direnv - Directory environment variables
 eval "$(direnv hook zsh)"
 
-export PATH="/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:$PATH"
+# fzf - Fuzzy finder
+source <(fzf --zsh)
 
-#THEOS
-export THEOS="/opt/theos"
+# gh - GitHub CLI
+eval "$(gh completion -s zsh)"
 
-# MAVEN
-export M2_HOME=/usr/local/apache-maven-3.3.9
-export PATH=$PATH:$M2_HOME/bin
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-export PATH=$M3:$JAVA_HOME:$PATH
+# -----------------------------------------------------------------------------
+# Prompt Configuration
+# -----------------------------------------------------------------------------
 
-#Macports
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export MANPATH=/opt/local/man:$MANPATH
-export GOPATH=~/.go
+# Git information in prompt
+autoload -Uz vcs_info
+precmd() { 
+  vcs_info
+  # Set terminal title to git project name or current directory
+  if [[ -n ${vcs_info_msg_0_} ]]; then
+    # In git repository - show project name
+    local git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+    if [[ -n $git_root ]]; then
+      local project_name=$(basename "$git_root")
+      print -Pn "\e]0;$project_name\a"
+    fi
+  else
+    # Not in git repository - show current directory
+    print -Pn "\e]0;%1~\a"
+  fi
+}
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '(%b)'
 
-#ADB
-export PATH=$PATH:/Users/tomoya.hirano/Library/Android/sdk/platform-tools
-
-if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/tomoya.hirano/google-cloud-sdk/path.zsh.inc ]; then
-  source '/Users/tomoya.hirano/google-cloud-sdk/path.zsh.inc'
+# User display customization
+current_user=$(whoami)
+current_host=$(hostname)
+if [[ "$current_user" == "$USER" && "$current_host" == "$HOST" ]]; then
+  user_display="⬥"
+else
+  user_display="%n@%m"
 fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f /Users/tomoya.hirano/google-cloud-sdk/completion.zsh.inc ]; then
-  source '/Users/tomoya.hirano/google-cloud-sdk/completion.zsh.inc'
-fi
+# Final prompt format
+PROMPT='${user_display} %1~ ${vcs_info_msg_0_}: '

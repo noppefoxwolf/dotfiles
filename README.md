@@ -1,10 +1,27 @@
-# dotfiles
+# Dotfiles
 
-##usage🐰
-`cd ~`
+個人的な開発環境設定ファイル集
 
-`git clone git@github.com:noppefoxwolf/dotfiles.git`
+## 含まれるファイル
 
-`sh ./dotfilesLink.sh`
+- `.zshrc` - zshシェルの設定
+- `.vimrc` - Vimエディタの設定
+- `.tmux.conf` - tmux端末マルチプレクサの設定
+- `.git-prompt.sh` - Gitプロンプト設定
 
-🎉
+## セットアップ
+
+各設定ファイルをホームディレクトリにシンボリックリンクとして配置してください。
+
+```bash
+ln -sf $(pwd)/.zshrc ~/.zshrc
+ln -sf $(pwd)/.vimrc ~/.vimrc
+ln -sf $(pwd)/.tmux.conf ~/.tmux.conf
+ln -sf $(pwd)/.git-prompt.sh ~/.git-prompt.sh
+```
+
+設定を有効にするため、シェルを再起動してください。
+
+```bash
+source ~/.zshrc
+```
